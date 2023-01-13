@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Performance demo many Wms layers</title>
+    <script src="https://cdn.jsdelivr.net/npm/ol@v7.2.2/dist/ol.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ol@v7.2.2/ol.css">
+    <style>
+      body {
+        margin: 0;
+      }
+      .debug-info {
+        min-height: 5em;
+        padding: 0.5em;
+      }
+      .map {
+        width: 1920px;
+        height: 1000px;
+      }
+    </style>
+  </head>
+  <body class="wrapper">
+    <div id="debug-info" class="debug-info"></div>
+    <div id="map" class="map"></div>
+    <script>
+        let layers = [
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://www.wms.nrw.de/geobasis/wms_nw_dop?',
+              params: {'LAYERS': 'nw_dop_rgb',
+                       'FORMAT': 'image/jpeg',},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://www.wms.nrw.de/umwelt/HW_Gefahrenkarte?',
+              params: {'LAYERS': '3,4,5,6',
+                       'FORMAT': 'image/png',},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://www.wms.nrw.de/umwelt/HW_Gefahrenkarte?',
+              params: {'LAYERS': '1',
+                       'FORMAT': 'image/png',},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://www.wms.nrw.de/umwelt/linfos?',
+              params: {'LAYERS': 'Vogelschutzgebiete',
+                       'FORMAT': 'image/png',},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://wms.wheregroup.com/cgi-bin/mapbender_user.xml?VERSION=1.3.0&SERVICE=WMS',
+              params: {'LAYERS': 'Mapbender_User'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://stadtplan.troisdorf.de/cgi-bin/mapserv/bin/mapserv.exe?map=E:/webgis/umn/troisdorf/troisdorf_stadtgrenze.map',
+              params: {'LAYERS': 'Stadtteilgrenzen_Linien,Stadtteilgrenzen_Text'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://www.wms.nrw.de/wms/strassen_nrw_wms?',
+              params: {'LAYERS': '4'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://www.wms.nrw.de/wms/strassen_nrw_wms?',
+              params: {'LAYERS': '7'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://www.wms.nrw.de/wms/strassen_nrw_wms?',
+              params: {'LAYERS': '6'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://www.wms.nrw.de/wms/strassen_nrw_wms?',
+              params: {'LAYERS': '0'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://www.wms.nrw.de/wms/strassen_nrw_wms?',
+              params: {'LAYERS': '5'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://stadtplan.troisdorf.de/cgi-bin/mapserv/bin/mapserv.exe?map=E:/webgis/umn/troisdorf/troisdorf_poi.map',
+              params: {'LAYERS': 'poi_altglas'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://stadtplan.troisdorf.de/cgi-bin/mapserv/bin/mapserv.exe?map=E:/webgis/umn/troisdorf/troisdorf_poi.map',
+              params: {'LAYERS': 'poi_altkleider'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://stadtplan.troisdorf.de/cgi-bin/mapserv/bin/mapserv.exe?map=E:/webgis/umn/troisdorf/troisdorf_poi.map',
+              params: {'LAYERS': 'poi_e-ladesaeule'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://stadtplan.troisdorf.de/cgi-bin/mapserv/bin/mapserv.exe?map=E:/webgis/umn/troisdorf/troisdorf_poi.map',
+              params: {'LAYERS': 'poi_kindertagesstaette,poi_jugendeinrichtung'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://stadtplan.troisdorf.de/cgi-bin/mapserv/bin/mapserv.exe?map=E:/webgis/umn/troisdorf/troisdorf_poi.map',
+              params: {'LAYERS': 'poi_kunstwerke'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://stadtplan.troisdorf.de/cgi-bin/mapserv/bin/mapserv.exe?map=E:/webgis/umn/troisdorf/troisdorf_poi.map',
+              params: {'LAYERS': 'poi_spielplatz'},
+            }),
+          }),
+          new ol.layer.Image({
+            source: new ol.source.ImageWMS({
+              url: 'https://stadtplan.troisdorf.de/cgi-bin/mapserv/bin/mapserv.exe?map=E:/webgis/umn/troisdorf/troisdorf_obstbaeume.map',
+              params: {'LAYERS': 'Obstbaeume,Obstbaeume_Symbole'},
+            }),
+          }),
+        ];
+        const layerCountMax = layers.length;
+        let layerParamMatch = (window.location.search || '').match(/layers=(\d+)/);
+        if (layerParamMatch) {
+          layers = layers.slice(0, parseInt(layerParamMatch[1]));
+        }
+        const map = new ol.Map({
+          layers: layers,
+          target: 'map',
+          view: new ol.View({
+            center: [7.1485, 50.8175],
+            projection: 'EPSG:4326',
+            zoom: 14,
+            transition: false
+          }),
+        });
+        let viewport = map.getViewport();
+        let debugText = [
+          'This is an Openlayers ', ol.VERSION, ' map with ', layers.length, ' WMS image layers.', '\n',
+          'Initial viewport size was ', viewport.clientWidth, 'x', viewport.clientHeight, ' pixels.' , '\n',
+          'Load the page with query parameter layers=<number> to reduce the layer count below the maximum (', layerCountMax,').', '\n',
+          'Please wait until all Wms layers have finished their initial load before evaluating performance.'
+        ].join('');
+        document.getElementById('debug-info').innerText = debugText;
+    </script>
+  </body>
+</html>
